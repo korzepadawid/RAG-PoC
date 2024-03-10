@@ -1,4 +1,3 @@
-import numpy as np
 from abc import ABC, abstractmethod
 from typing import List
 
@@ -14,20 +13,6 @@ class LLM(ABC):
             text (str): The input text to be tokenized.
         Returns:
             List[float]: The list of floats representing the tokenized form of the input text.
-        Raises:
-            NotImplementedError: This method must be implemented by subclasses.
-        """
-        raise NotImplementedError()
-
-    @abstractmethod
-    def tokenize_array(self, text: str) -> np.ndarray:
-        """Abstract method to tokenize input text into a NumPy array.
-        Subclasses must implement this method to provide tokenization functionality
-        with the output represented as a NumPy array.
-        Args:
-            text (str): The input text to be tokenized.
-        Returns:
-            np.ndarray: The NumPy array representing the tokenized form of the input text.
         Raises:
             NotImplementedError: This method must be implemented by subclasses.
         """

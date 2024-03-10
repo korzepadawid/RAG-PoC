@@ -2,6 +2,7 @@ import logging
 import os
 
 from dotenv import load_dotenv
+
 from openaillm import OpenAILLM, RAGConfig
 
 
@@ -15,8 +16,7 @@ def main() -> None:
         openai_api_key=os.getenv('OPENAI_API_KEY'),
         mongo_uri=os.getenv('MONGO_DB_URI'),
     )
-    openai_llm = OpenAILLM(config=rag_config)
-    print(openai_llm.answer("Which database Meta did extend?"))
+    OpenAILLM(config=rag_config, save_new=True)
 
 
 if __name__ == '__main__':
