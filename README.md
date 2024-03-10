@@ -20,3 +20,8 @@ Remember to create an index called `openai_idx` on embeddings in your database.
 2024-03-10 14:42:52,397 - HTTP Request: POST https://api.openai.com/v1/completions "HTTP/1.1 200 OK"
 Meta extended RocksDB, a widely used open-source storage engine designed and built for local SSDs.
 ```
+
+## Creating embeddings
+```
+$ python ./populate_embeddings.py
+```
