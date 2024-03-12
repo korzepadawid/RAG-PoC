@@ -3,7 +3,7 @@ import logging
 from dataclasses import dataclass
 from langchain_mongodb.vectorstores import MongoDBDocumentType
 from langchain.chains import RetrievalQA
-from langchain_community.document_loaders import DirectoryLoader
+from langchain_community.document_loaders import DirectoryLoader, UnstructuredMarkdownLoader
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_core.documents import Document
 from pymongo import MongoClient
@@ -38,7 +38,12 @@ class OpenAILLM(LLM):
         self.vec_store = None
         self.save_new = save_new
         if save_new:
-            data = DirectoryLoader('data', glob='./*.txt', show_progress=True).load()
+            data = DirectoryLoader('data/gradle-lint-plugin.wiki', glob='./*.md', show_progress=True).load()
+            # data = UnstructuredMarkdownLoader(
+            #     './data/gradle-lint-plugin.wiki',
+            #     glob='./*.md',
+            #     show_progress=True
+            # ).load()
             MongoDBAtlasVectorSearch.from_documents(data, self.embeddings, collection=self.collection)
             logging.info('saved new embeddings to MongoDB')
         else:

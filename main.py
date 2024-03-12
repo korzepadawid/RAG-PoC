@@ -16,7 +16,7 @@ def main() -> None:
         mongo_uri=os.getenv('MONGO_DB_URI'),
     )
     openai_llm = OpenAILLM(config=rag_config)
-    print(openai_llm.answer("Which database did Meta extend?"))
+    print(openai_llm.answer("How to exclude the minimum dependency rule in gradleLint plugin?"))
 
 
 if __name__ == '__main__':
