@@ -8,7 +8,7 @@ from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_core.documents import Document
 from pymongo import MongoClient
 from pymongo.collection import Collection
-from typing import List, Tuple
+from typing import List, Tuple, Any
 from langchain_openai import OpenAIEmbeddings, OpenAI
 from llm import LLM
 
@@ -57,13 +57,13 @@ class OpenAILLM(LLM):
         self._validate()
         return self.embeddings.embed_query(text)
 
-    def answer(self, query: str) -> str:
+    def answer(self, query: str) -> tuple[Any, Document]:
         self._validate()
-        _ = self._search(query)  # might be useful for a hallucination detection
+        doc, _ = self._search(query)  # might be useful for a hallucination detection
         llm = OpenAI(openai_api_key=self.config.openai_api_key, temperature=0.5)
         qa = RetrievalQA.from_chain_type(llm, chain_type='stuff', retriever=self.vec_store.as_retriever())
         response = qa.invoke({"query": query}, return_only_outputs=True)
-        return response['result'].strip()
+        return response['result'].strip(), doc
 
     def _search(self, query: str) -> Tuple[Document, float]:
         docs = self.vec_store.similarity_search_with_score(query=query, k=1)
